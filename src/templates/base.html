@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <h1>Chill Study Session Planner</h1>
+      <nav>
+        <a href="/">Home</a> |
+        <a href="/login">About</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>
