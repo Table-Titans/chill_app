@@ -1,5 +1,5 @@
 # chill_app
-Chill Study App test
+Chill Study App
 
 ## Prerequisites
 - Python 3.11 (recommended for all contributors)
