@@ -83,12 +83,13 @@ pip install -r requirements.txt
 
 ## Project structure
 ```
-app.py                 # App entrypoint (creates app via src.create_app)
-src/__init__.py        # App factory & bootstrap init
-src/routes.py          # Routes blueprint
-src/templates/         # Jinja templates
-src/static/            # Static resources like images, css files, or js files
-requirements.txt       # Pinned dependencies
+app.py             # App entrypoint (creates app via src.create_app)
+__init__.py        # App factory & bootstrap init
+routes.py          # Routes blueprint
+config.py          # Config details for app startup
+templates/         # Jinja templates
+static/            # Static resources like images, css files, or js files
+requirements.txt   # Pinned dependencies
 ```
 
 ## Troubleshooting
