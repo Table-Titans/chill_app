@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+
+    <h2 class="mb-4 text-center">Welcome to the Home Page!</h2>
+
+    <!-- Example: Bootstrap Alert -->
+    <div class="alert alert-success" role="alert">
+      🎉 This is a Bootstrap success alert — your Flask app is running perfectly!
+    </div>
+
+    <!-- Example: Bootstrap Buttons -->
+    <div class="mb-4 text-center">
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-secondary">Secondary</button>
+      <button type="button" class="btn btn-outline-danger">Danger Outline</button>
+    </div>
+
+    <!-- Example: Bootstrap Card -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Example Card</h5>
+        <p class="card-text">
+          This is a Bootstrap card component. You can use cards to display grouped content with padding, titles, and links.
+        </p>
+        <a href="#" class="btn btn-sm btn-info">Learn more</a>
+      </div>
+    </div>
+
+    <!-- Example: Bootstrap Table -->
+    <h4>Sample Table</h4>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Item</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Flask setup complete</td>
+          <td><span class="badge bg-success">Done</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Connected to Bootstrap</td>
+          <td><span class="badge bg-success">Done</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Database integration</td>
+          <td><span class="badge bg-warning text-dark">Pending</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Example: Bootstrap Grid -->
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <div class="p-3 bg-light border rounded">Column 1</div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-3 bg-light border rounded">Column 2</div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-3 bg-light border rounded">Column 3</div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
