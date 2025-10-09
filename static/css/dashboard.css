@@ -1,0 +1,55 @@
+.my_sessions{
+    max-width: 940px; /* Same as .session_card */
+    margin: 40px auto 0; /* Center it like the card */
+    padding: 15px 16px; /* Align with card's internal padding */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    font-size: 30px
+}
+
+.join_session {
+    max-width: 940px; /* Same as .session_card */
+    margin: 40px auto 0; /* Center it like the card */
+    padding: 15px 14px; /* Align with card's internal padding */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    font-size: 30px
+}
+
+/* ====== Search + Create Row ====== */
+.search_create {
+  display: flex;
+  align-items: center;
+  gap: 200px;
+  max-width: 910px; /* Match the width of the titles */
+  margin: 0 auto 20px; /* Center the container and add bottom margin */
+  box-sizing: border-box; /* Ensure padding doesn't affect the max-width */
+
+}
+
+.search_bar {
+  flex: 1;
+  padding: 12px 16px;
+  max-width:940px;
+  border-radius: 8px;
+  border-width:1px
+}
+
+.search_bar::placeholder {
+  color: #666;
+}
+
+/* Green “Create a New Session” button */
+.create_sessions {
+  background-color: #09b34b;      /* bright green like mockup */
+  color: white;
+  border: 1.5px solid black;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-family: inter, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.05s ease;
+}
+
+.create_sessions:hover { background-color: #0acb55; }
+.create_sessions:active { transform: translateY(1px); box-shadow: 0 3px 0 rgba(0,0,0,0.35); }

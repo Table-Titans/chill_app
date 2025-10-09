@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    font-family: inter, sans-serif; 
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 15px; /* Reduced horizontal padding */
+    background: linear-gradient(to right, #9e5bd8, #18002d);
+    border-color: black;
+    border-width: 1.5px;
+    border-style: solid;
+}
+
+.navbar_brand {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand_title {
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+}
+
+.brand_subtitle {
+    font-size: 32px;
+    color: #390860;
+    font-weight: bold;
+   
+}
+
+.logout-button {
+    background-color: #6f1fb6; /* Darker purple from your navbar gradient */
+    color: black;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 50px; /* This creates the pill shape */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none; /* In case you use an <a> tag styled as a button */
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #7e2cc7; /* A slightly lighter purple for the hover effect */
+}

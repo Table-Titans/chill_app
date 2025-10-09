@@ -17,3 +17,7 @@ def register_routes(app):
     @app.route("/reset-password")
     def reset_password():
         return render_template("auth/reset_pass.html", title="Reset Password")
+    
+    @app.route("/dashboard")
+    def main_dashboard():
+        return render_template("dashboard/main_dashboard.html", title="MaignDashboard")
