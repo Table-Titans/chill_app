@@ -6,24 +6,36 @@
   <title>{% block title %}Dashboard{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="dashboard-body">
+  <div class="dashboard-background"></div>
   {% include "partials/navbar.html" %}
 
-  <main class="container">
+  <main class="dashboard-container">
+    <div class="dashboard-content">
+      
+      <!-- My Sessions Section -->
+      <section class="sessions-section">
+        <h2 class="section-title">My Sessions</h2>
+        <div class="sessions-list">
+          {% include "partials/session_card.html" %}
+          {% include "partials/session_card.html" %}
+          {% include "partials/session_card.html" %}
+        </div>
+      </section>
 
-    <h2 class="my_sessions">My Sessions</h2>
-        {% include "partials/session_card.html" %}
-
-    <h2 class="join_session">Join a Session</h2>
-    <div class="search_create">
-        <input type="text" placeholder="Search sessions..." class="search_bar">
-        <button class="create_sessions">Create a New Session</button>
+      <!-- Join a Session Section -->
+      <section class="sessions-section">
+        <h2 class="section-title">Join a Session</h2>
+        <div class="search_create">
+          <input type="text" placeholder="Search sessions..." class="search_bar">
+          <button class="create_sessions">Create a New Session</button>
+        </div>
+        <div class="sessions-list">
+          {% include "partials/session_card.html" %}
+          {% include "partials/session_card.html" %}
+        </div>
+      </section>
     </div>
-        {% include "partials/session_card.html" %}
   </main>
-  
-
-
-  
 </body>
 </html>

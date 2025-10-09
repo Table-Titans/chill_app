@@ -106,11 +106,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 15px; /* Reduced horizontal padding */
+    padding: 25px 40px;
     background: linear-gradient(to right, #9e5bd8, #18002d);
-    border-color: black;
-    border-width: 1.5px;
-    border-style: solid;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
 }
 
 .navbar_brand {
@@ -119,105 +120,194 @@ body {
 }
 
 .brand_title {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
-    color: black;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .brand_subtitle {
     font-size: 32px;
     color: #390860;
     font-weight: bold;
-   
 }
 
 .logout-button {
-    background-color: #6f1fb6; /* Darker purple from your navbar gradient */
-    color: black;
-    padding: 10px 25px;
-    border: none;
-    border-radius: 50px; /* This creates the pill shape */
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #4f0f87;
+    padding: 12px 28px;
+    border: 2px solid white;
+    border-radius: 50px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    text-decoration: none; /* In case you use an <a> tag styled as a button */
-    transition: background-color 0.3s ease;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logout-button:hover {
-    background-color: #7e2cc7; /* A slightly lighter purple for the hover effect */
+    background-color: white;
+    color: #7605da;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* ====== DASHBOARD STYLES ====== */
-.my_sessions{
-    max-width: 940px; /* Same as .session_card */
-    margin: 40px auto 0; /* Center it like the card */
-    padding: 15px 16px; /* Align with card's internal padding */
-    box-sizing: border-box; /* Include padding in the width calculation */
-    font-size: 30px
+.dashboard-body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #f4f4f4 0%, #e8e0f0 100%);
 }
 
-.join_session {
-    max-width: 940px; /* Same as .session_card */
-    margin: 40px auto 0; /* Center it like the card */
-    padding: 15px 14px; /* Align with card's internal padding */
-    box-sizing: border-box; /* Include padding in the width calculation */
-    font-size: 30px
+.dashboard-background {
+    display: none;
+}
+
+.dashboard-container {
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-content {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(79, 15, 135, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.sessions-section {
+    margin-bottom: 40px;
+}
+
+.sessions-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #4f0f87;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #9e5bd8;
+}
+
+.sessions-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+.sessions-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sessions-list::-webkit-scrollbar-track {
+    background: rgba(158, 91, 216, 0.1);
+    border-radius: 10px;
+}
+
+.sessions-list::-webkit-scrollbar-thumb {
+    background: #9e5bd8;
+    border-radius: 10px;
+}
+
+.sessions-list::-webkit-scrollbar-thumb:hover {
+    background: #7605da;
+}
+
+/* Empty state for sessions list */
+.sessions-list:empty::after {
+    content: "No sessions available";
+    display: block;
+    text-align: center;
+    color: #999;
+    padding: 30px;
+    font-style: italic;
 }
 
 /* ====== Search + Create Row ====== */
 .search_create {
-  display: flex;
-  align-items: center;
-  gap: 200px;
-  max-width: 910px; /* Match the width of the titles */
-  margin: 0 auto 20px; /* Center the container and add bottom margin */
-  box-sizing: border-box; /* Ensure padding doesn't affect the max-width */
-
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .search_bar {
-  flex: 1;
-  padding: 12px 16px;
-  max-width:940px;
-  border-radius: 8px;
-  border-width:1px
+    flex: 1;
+    min-width: 250px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 2px solid #9e5bd8;
+    font-size: 16px;
+    font-family: inter, sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search_bar:focus {
+    outline: none;
+    border-color: #7605da;
+    box-shadow: 0 0 0 3px rgba(158, 91, 216, 0.2);
 }
 
 .search_bar::placeholder {
-  color: #666;
+    color: #999;
 }
 
 /* Green "Create a New Session" button */
 .create_sessions {
-  background-color: #09b34b;      /* bright green like mockup */
-  color: white;
-  border: 1.5px solid black;
-  border-radius: 8px;
-  padding: 12px 22px;
-  font-family: inter, sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.05s ease;
+    background-color: #09b34b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 28px;
+    font-family: inter, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(9, 179, 75, 0.3);
+    white-space: nowrap;
 }
 
-.create_sessions:hover { background-color: #0acb55; }
-.create_sessions:active { transform: translateY(1px); box-shadow: 0 3px 0 rgba(0,0,0,0.35); }
+.create_sessions:hover {
+    background-color: #0acb55;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(9, 179, 75, 0.4);
+}
+
+.create_sessions:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(9, 179, 75, 0.3);
+}
 
 /* ====== SESSION CARD STYLES ====== */
 .session_card {
-  background-color: #fff;
-  border: 1.5px solid black;
-  border-radius: 12px;
-  padding: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f4fc 100%);
+  border: 2px solid #9e5bd8;
+  border-radius: 15px;
+  padding: 20px;
   margin: 12px 0;
   display: flex;
   align-items: center;
-  gap: 16px;
-  max-width: 880px;
+  gap: 20px;
   font-family: inter, sans-serif;
-  margin: auto;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(79, 15, 135, 0.1);
+}
+
+.session_card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(79, 15, 135, 0.2);
+  border-color: #7605da;
 }
 
 /* Keep text on left and button on right */
@@ -227,43 +317,51 @@ body {
 
 /* TEXT STYLING */
 .session_card h1 {
-  margin: 0 0 8px 0;
-  font-size: 24px;
+  margin: 0 0 12px 0;
+  font-size: 22px;
   font-weight: bold;
-  color: black;
+  color: #4f0f87;
 }
 
 .session_card p {
   margin: 6px 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: black;
+  font-size: 15px;
+  font-weight: 600;
+  color: #6f1fb6;
 }
 
 .session_card p span {
   font-weight: 400;
-  color: #222;
+  color: #555;
 }
 
 /* ACTION BUTTON */
 .action {
-  background-color: #6f1fb6;
+  background: linear-gradient(135deg, #6f1fb6 0%, #904fca 100%);
   color: white;
-  padding: 10px 22px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(111, 31, 182, 0.3);
+  white-space: nowrap;
 }
 
 .action:hover {
-  background-color: #904fca;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(111, 31, 182, 0.4);
+}
+
+.action:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(111, 31, 182, 0.3);
 }
 
 /* RESPONSIVE ADJUSTMENT */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .session_card {
     flex-direction: column;
     align-items: flex-start;
@@ -271,6 +369,28 @@ body {
 
   .session_card > div:last-child {
     margin-left: 0;
+    width: 100%;
+  }
+
+  .action {
+    width: 100%;
+  }
+
+  .dashboard-content {
+    padding: 25px;
+  }
+
+  .search_create {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search_bar {
+    width: 100%;
+  }
+
+  .create_sessions {
+    width: 100%;
   }
 }
 
