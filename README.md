@@ -1,5 +1,5 @@
-# chill_app
-Chill Study App
+# StudyVibes App
+StudyVibes App
 
 ## Prerequisites
 - Python 3.11 (recommended for all contributors)
@@ -34,13 +34,13 @@ Chill Study App
    ```
 2. Clone the repository:
    ```bash
-   git clone git@github.com:Table-Titans/chill_app.git
-   cd chill_app
+   git clone git@github.com:Table-Titans/StudyVibes.git
+   cd studyvibes
    ```
    - If you prefer HTTPS:
      ```bash
-     git clone https://github.com/Table-Titans/chill_app.git
-     cd chill_app
+     git clone https://github.com/Table-Titans/StudyVibes.git
+     cd studyvibes
      ```
 3. Ensure you are on the main branch and up to date:
    ```bash
