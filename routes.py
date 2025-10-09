@@ -13,3 +13,7 @@ def register_routes(app):
     @app.route("/register")
     def register():
         return render_template("auth/register.html", title="Register")
+    
+    @app.route("/dashboard")
+    def main_dashboard():
+        return render_template("dashboard/main_dashboard.html", title="MaignDashboard")
