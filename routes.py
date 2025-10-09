@@ -20,4 +20,4 @@ def register_routes(app):
     
     @app.route("/dashboard")
     def main_dashboard():
-        return render_template("dashboard/main_dashboard.html", title="MaignDashboard")
+        return render_template("main_dashboard.html", title="MaignDashboard")
