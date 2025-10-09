@@ -4,7 +4,7 @@ def register_routes(app):
     
     @app.route("/")
     def home():
-        return render_template("home.html")
+        return render_template("main_dashboard.html", title="MainDashboard")
     
     @app.route("/login")
     def login():
@@ -17,7 +17,3 @@ def register_routes(app):
     @app.route("/reset-password")
     def reset_password():
         return render_template("auth/reset_pass.html", title="Reset Password")
-    
-    @app.route("/dashboard")
-    def main_dashboard():
-        return render_template("main_dashboard.html", title="MaignDashboard")

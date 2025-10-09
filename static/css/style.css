@@ -1,10 +1,12 @@
+/* ====== GENERAL STYLES ====== */
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: inter, sans-serif;
     background-color: #f4f4f4;
 }
 
+/* ====== LOGIN PAGE STYLES ====== */
 .login-container {
     position: relative;
     height: 100vh;
@@ -98,3 +100,177 @@ body {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
+/* ====== NAVBAR STYLES ====== */
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 15px; /* Reduced horizontal padding */
+    background: linear-gradient(to right, #9e5bd8, #18002d);
+    border-color: black;
+    border-width: 1.5px;
+    border-style: solid;
+}
+
+.navbar_brand {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand_title {
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+}
+
+.brand_subtitle {
+    font-size: 32px;
+    color: #390860;
+    font-weight: bold;
+   
+}
+
+.logout-button {
+    background-color: #6f1fb6; /* Darker purple from your navbar gradient */
+    color: black;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 50px; /* This creates the pill shape */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none; /* In case you use an <a> tag styled as a button */
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #7e2cc7; /* A slightly lighter purple for the hover effect */
+}
+
+/* ====== DASHBOARD STYLES ====== */
+.my_sessions{
+    max-width: 940px; /* Same as .session_card */
+    margin: 40px auto 0; /* Center it like the card */
+    padding: 15px 16px; /* Align with card's internal padding */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    font-size: 30px
+}
+
+.join_session {
+    max-width: 940px; /* Same as .session_card */
+    margin: 40px auto 0; /* Center it like the card */
+    padding: 15px 14px; /* Align with card's internal padding */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    font-size: 30px
+}
+
+/* ====== Search + Create Row ====== */
+.search_create {
+  display: flex;
+  align-items: center;
+  gap: 200px;
+  max-width: 910px; /* Match the width of the titles */
+  margin: 0 auto 20px; /* Center the container and add bottom margin */
+  box-sizing: border-box; /* Ensure padding doesn't affect the max-width */
+
+}
+
+.search_bar {
+  flex: 1;
+  padding: 12px 16px;
+  max-width:940px;
+  border-radius: 8px;
+  border-width:1px
+}
+
+.search_bar::placeholder {
+  color: #666;
+}
+
+/* Green "Create a New Session" button */
+.create_sessions {
+  background-color: #09b34b;      /* bright green like mockup */
+  color: white;
+  border: 1.5px solid black;
+  border-radius: 8px;
+  padding: 12px 22px;
+  font-family: inter, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.05s ease;
+}
+
+.create_sessions:hover { background-color: #0acb55; }
+.create_sessions:active { transform: translateY(1px); box-shadow: 0 3px 0 rgba(0,0,0,0.35); }
+
+/* ====== SESSION CARD STYLES ====== */
+.session_card {
+  background-color: #fff;
+  border: 1.5px solid black;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 880px;
+  font-family: inter, sans-serif;
+  margin: auto;
+}
+
+/* Keep text on left and button on right */
+.session_card > div:last-child {
+  margin-left: auto;
+}
+
+/* TEXT STYLING */
+.session_card h1 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+.session_card p {
+  margin: 6px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+.session_card p span {
+  font-weight: 400;
+  color: #222;
+}
+
+/* ACTION BUTTON */
+.action {
+  background-color: #6f1fb6;
+  color: white;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action:hover {
+  background-color: #904fca;
+}
+
+/* RESPONSIVE ADJUSTMENT */
+@media (max-width: 600px) {
+  .session_card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .session_card > div:last-child {
+    margin-left: 0;
+  }
+}
+
