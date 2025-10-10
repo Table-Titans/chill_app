@@ -17,9 +17,10 @@
       <section class="sessions-section">
         <h2 class="section-title">My Sessions</h2>
         <div class="sessions-list">
-          {% include "partials/session_card.html" %}
-          {% include "partials/session_card.html" %}
-          {% include "partials/session_card.html" %}
+          {% for session in my_sessions %}
+            {% set section = "my_sessions" %}
+            {% include "partials/session_card.html" %}
+          {% endfor %}
         </div>
       </section>
 
@@ -28,11 +29,14 @@
         <h2 class="section-title">Join a Session</h2>
         <div class="search_create">
           <input type="text" placeholder="Search sessions..." class="search_bar">
+          <button class="filter_sessions">Filter</button>
           <button class="create_sessions">Create a New Session</button>
         </div>
         <div class="sessions-list">
-          {% include "partials/session_card.html" %}
-          {% include "partials/session_card.html" %}
+          {% for session in join_sessions %}
+            {% set section = "join_sessions" %}
+            {% include "partials/session_card.html" %}
+          {% endfor %}
         </div>
       </section>
     </div>

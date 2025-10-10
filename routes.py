@@ -1,10 +1,12 @@
 from flask import render_template
+from tests.my_session_data import test_sessions as my_sessions
+from tests.join_session_data import test_sessions as join_sessions
 
 def register_routes(app):
     
     @app.route("/")
     def home():
-        return render_template("main_dashboard.html", title="MainDashboard")
+        return render_template("main_dashboard.html", my_sessions=my_sessions, join_sessions=join_sessions)
     
     @app.route("/login")
     def login():
