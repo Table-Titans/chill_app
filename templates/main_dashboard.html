@@ -30,7 +30,7 @@
         <div class="search_create">
           <input type="text" placeholder="Search sessions..." class="search_bar">
           <button class="filter_sessions">Filter</button>
-          <button class="create_sessions">Create a New Session</button>
+          <a href="{{ url_for('create_session') }}" class="create_sessions">Create a New Session</a>
         </div>
         <div class="sessions-list">
           {% for session in join_sessions %}

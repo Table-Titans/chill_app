@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Study Session</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% include "partials/navbar.html" %}
+    
+    <div class="form-container">
+        <h1>Create a Study Session</h1>
+        <form method="POST" action="{{ url_for('create_session') }}" class="create-session-form">
+            <div class="form-group">
+                <label for="course">Course</label>
+                <div class="autocomplete-wrapper">
+                    <input type="text" id="course" name="course" required autocomplete="off">
+                    <div class="autocomplete-list" id="course-suggestions"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <div class="autocomplete-wrapper">
+                    <input type="text" id="location" name="location" required autocomplete="off">
+                    <div class="autocomplete-list" id="location-suggestions"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="max_attendees">Maximum Attendees</label>
+                <input type="number" id="max_attendees" name="max_attendees" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Session Description</label>
+                <textarea id="description" name="description" maxlength="200" rows="4" required></textarea>
+                <small class="char-count">Maximum 200 characters</small>
+            </div>
+
+            <div class="form-group">
+                <label for="start_time">Start Time</label>
+                <input type="datetime-local" id="start_time" name="start_time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_time">End Time</label>
+                <input type="datetime-local" id="end_time" name="end_time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="chill_level">Chill Level</label>
+                <select id="chill_level" name="chill_level" required>
+                    <option value="😎">😎 Relaxed</option>
+                    <option value="🤓">🤓 Focused</option>
+                    <option value="😤">😤 Intense</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Create Session</button>
+        </form>
+    </div>
+
+    <script>
+        // Add character counter for description
+        const description = document.getElementById('description');
+        const charCount = document.querySelector('.char-count');
+        
+        description.addEventListener('input', function() {
+            const remaining = 200 - this.value.length;
+            charCount.textContent = `${remaining} characters remaining`;
+        });
+
+        // Validate end time is after start time
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const startTime = new Date(document.getElementById('start_time').value);
+            const endTime = new Date(document.getElementById('end_time').value);
+            
+            if (endTime <= startTime) {
+                e.preventDefault();
+                alert('End time must be after start time');
+            }
+        });
+
+        // Autocomplete functionality
+        function setupAutocomplete(inputId, suggestionsId, getSuggestions) {
+            const input = document.getElementById(inputId);
+            const suggestionsList = document.getElementById(suggestionsId);
+            
+            input.addEventListener('input', async function() {
+                const query = this.value.trim();
+                if (query.length < 2) {
+                    suggestionsList.innerHTML = '';
+                    return;
+                }
+
+                // TODO: Replace with actual API call when database is implemented
+                const suggestions = await getSuggestions(query);
+                
+                suggestionsList.innerHTML = '';
+                suggestions.forEach(suggestion => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.textContent = suggestion;
+                    div.addEventListener('click', () => {
+                        input.value = suggestion;
+                        suggestionsList.innerHTML = '';
+                    });
+                    suggestionsList.appendChild(div);
+                });
+            });
+
+            // Close suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target)) {
+                    suggestionsList.innerHTML = '';
+                }
+            });
+        }
+
+        // Mock data - replace with API calls when database is implemented
+        const mockCourses = [
+            'Computer Science 101',
+            'Computer Science 201',
+            'Data Structures',
+            'Algorithms',
+            'Database Systems',
+            'Software Engineering',
+            'Web Development',
+            'Machine Learning'
+        ];
+
+        const mockLocations = [
+            'Library - 1st Floor',
+            'Library - 2nd Floor',
+            'Library - Study Room 101',
+            'Library - Study Room 102',
+            'Student Center',
+            'Engineering Building',
+            'Science Center',
+            'Coffee Shop'
+        ];
+
+        // Setup autocomplete for both fields
+        setupAutocomplete('course', 'course-suggestions', async (query) => {
+            // TODO: Replace with actual API call
+            return mockCourses.filter(course => 
+                course.toLowerCase().includes(query.toLowerCase())
+            );
+        });
+
+        setupAutocomplete('location', 'location-suggestions', async (query) => {
+            // TODO: Replace with actual API call
+            return mockLocations.filter(location => 
+                location.toLowerCase().includes(query.toLowerCase())
+            );
+        });
+    </script>
+</body>
+</html>

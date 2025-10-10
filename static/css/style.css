@@ -459,6 +459,132 @@ body {
   box-shadow: 0 2px 4px rgba(9, 179, 75, 0.3);
 }
 
+/* ====== CREATE SESSION FORM STYLES ====== */
+.form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(79, 15, 135, 0.15);
+}
+
+.form-container h1 {
+    color: #4f0f87;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.create-session-form .form-group {
+    margin-bottom: 20px;
+}
+
+.create-session-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4f0f87;
+    font-weight: 600;
+}
+
+.create-session-form input[type="number"],
+.create-session-form input[type="datetime-local"],
+.create-session-form input[type="text"],
+.create-session-form textarea,
+.create-session-form select {
+    width: -webkit-fill-available;
+    padding: 12px;
+    border: 2px solid #9e5bd8;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Autocomplete styles */
+.autocomplete-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.autocomplete-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #9e5bd8;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(79, 15, 135, 0.15);
+}
+
+.autocomplete-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.autocomplete-item:hover {
+    background-color: #f8f4fc;
+    color: #6f1fb6;
+}
+
+.autocomplete-item:not(:last-child) {
+    border-bottom: 1px solid #e0d8eb;
+}
+
+.create-session-form input:focus,
+.create-session-form textarea:focus,
+.create-session-form select:focus {
+    outline: none;
+    border-color: #7605da;
+    box-shadow: 0 0 0 3px rgba(158, 91, 216, 0.2);
+}
+
+.create-session-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.create-session-form .char-count {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 14px;
+}
+
+.create-session-form select {
+    cursor: pointer;
+}
+
+.create-session-form .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #6f1fb6 0%, #904fca 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.create-session-form .submit-btn:hover {
+    background: linear-gradient(135deg, #904fca 0%, #6f1fb6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(111, 31, 182, 0.4);
+}
+
+.create-session-form .submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(111, 31, 182, 0.3);
+}
+
 /* RESPONSIVE ADJUSTMENT */
 @media (max-width: 768px) {
   .session_card {
