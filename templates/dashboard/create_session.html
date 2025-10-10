@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Create Session{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    {% include "partials/navbar.html" %}
+
+    <main class="container">
+
+        <h2 class="create_session">Create a Session</h2>
+        </div>
+        <div class="create-box">
+            <p>Create and Host a StudyVibes Group Session</p>
+            <form action="/create_session" method="POST">
+                <input type="text" name="location" placeholder="Location" required>
+                <input type="text" name="time" placeholder="Time" required>
+                <input type="text" name="chill level" placeholder="Chill Level" required>
+                <button type="submit">Create Session</button>
+            </form>
+        </div>
+    </main>
+
+  
+</body>
+</html>

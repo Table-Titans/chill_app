@@ -17,3 +17,7 @@ def register_routes(app):
     @app.route("/dashboard")
     def main_dashboard():
         return render_template("dashboard/main_dashboard.html", title="MaignDashboard")
+    
+    @app.route("/create_session")
+    def create_session():
+        return render_template("dashboard/create_session.html", title="CreateSession")
