@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>{% block title %}Dashboard{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}" defer></script>
 </head>
 <body class="dashboard-body">
   <div class="dashboard-background"></div>
@@ -28,15 +29,88 @@
       <section class="sessions-section">
         <h2 class="section-title">Join a Session</h2>
         <div class="search_create">
-          <input type="text" placeholder="Search sessions..." class="search_bar">
-          <button class="filter_sessions">Filter</button>
-          <button class="create_sessions">Create a New Session</button>
+          <input type="text" id="searchBar" placeholder="Search sessions..." class="search_bar">
+          <button id="filterToggle" class="filter_sessions">
+            <span class="filter-icon">⚙</span> Filter
+          </button>
+          <a href="{{ url_for('create_session') }}" class="create_sessions">Create a New Session</a>
         </div>
-        <div class="sessions-list">
+        
+        <!-- Filter Panel -->
+        <div id="filterPanel" class="filter-panel">
+          <div class="filter-panel-content">
+            <div class="filter-header">
+              <h3>Filter Sessions</h3>
+              <button id="clearFilters" class="clear-filters-btn">Clear All</button>
+            </div>
+            
+            <div class="filter-grid">
+              <div class="filter-group">
+                <label for="filterCourse">Course Name</label>
+                <select id="filterCourse" class="filter-select">
+                  <option value="">All Courses</option>
+                  {% for course in courses|unique(attribute='title')|sort(attribute='title') %}
+                    <option value="{{ course.title }}">{{ course.title }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="filter-group">
+                <label for="filterLocation">Location</label>
+                <select id="filterLocation" class="filter-select">
+                  <option value="">All Locations</option>
+                  {% for location in locations|unique(attribute='address')|sort(attribute='address') %}
+                    <option value="{{ location.address }}">{{ location.address }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="filter-group">
+                <label for="filterYear">Year</label>
+                <select id="filterYear" class="filter-select">
+                  <option value="">All Years</option>
+                  {% for course in courses|unique(attribute='year')|sort(attribute='year', reverse=True) %}
+                    <option value="{{ course.year }}">{{ course.year }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="filter-group">
+                <label for="filterTerm">Term</label>
+                <select id="filterTerm" class="filter-select">
+                  <option value="">All Terms</option>
+                  <option value="1">Fall</option>
+                  <option value="2">Spring</option>
+                  <option value="3">Summer</option>
+                </select>
+              </div>
+              
+              <div class="filter-group">
+                <label for="filterProfessor">Professor</label>
+                <select id="filterProfessor" class="filter-select">
+                  <option value="">All Professors</option>
+                  {% for course in courses|unique(attribute='professor_name')|sort(attribute='professor_name') %}
+                    <option value="{{ course.professor_name }}">{{ course.professor_name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            
+            <div class="filter-actions">
+              <button id="applyFilters" class="apply-filters-btn">Apply Filters</button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="joinSessionsList" class="sessions-list">
           {% for session in join_sessions %}
             {% set section = "join_sessions" %}
             {% include "partials/session_card.html" %}
           {% endfor %}
+        </div>
+        
+        <div id="noResultsMessage" class="no-results" style="display: none;">
+          <p>No sessions match your filters. Try adjusting your criteria.</p>
         </div>
       </section>
     </div>
