@@ -1,4 +1,4 @@
-<div class="session_card {{ 'chill' if session.title.startswith('😎') else 'moderate' if session.title.startswith('🤓') else 'intense' if session.title.startswith('😤') else '' }}">
+<div class="session_card {{ 'chill' if session.title.startswith('😎') else 'moderate' if session.title.startswith('🤓') else 'intense' if session.title.startswith('😤') else '' }}" data-session-id="{{ session.id }}">
     <div class="session_info">
         <h1>{{ session.title }}</h1>
         <p class="location" style="font-size: 16px;">Location: <span>{{ session.location }}</span></p>
@@ -7,9 +7,9 @@
     </div>
     <div>
         {% if section == 'my_sessions' %}
-            <button class="action leave-session">Leave Session</button>
+            <button class="action leave-session" data-session-id="{{ session.id }}">Leave Session</button>
         {% else %}
-            <button class="action join-session">Join Session</button>
+            <button class="action join-session" data-session-id="{{ session.id }}">Join Session</button>
         {% endif %}
     </div>
 </div>
