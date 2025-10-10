@@ -1,10 +1,12 @@
+/* ====== GENERAL STYLES ====== */
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: inter, sans-serif;
     background-color: #f4f4f4;
 }
 
+/* ====== LOGIN PAGE STYLES ====== */
 .login-container {
     position: relative;
     height: 100vh;
@@ -66,6 +68,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 .login-box form button {
@@ -77,6 +80,7 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .login-box form button:hover {
@@ -96,3 +100,396 @@ body {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
+/* ====== NAVBAR STYLES ====== */
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 40px;
+    background: linear-gradient(to right, #9e5bd8, #18002d);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
+}
+
+.navbar_brand {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand_title {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.brand_subtitle {
+    font-size: 32px;
+    color: #390860;
+    font-weight: bold;
+}
+
+.logout-button {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #4f0f87;
+    padding: 12px 28px;
+    border: 2px solid white;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button:hover {
+    background-color: white;
+    color: #7605da;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ====== DASHBOARD STYLES ====== */
+.dashboard-body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #f4f4f4 0%, #e8e0f0 100%);
+}
+
+.dashboard-background {
+    display: none;
+}
+
+.dashboard-container {
+    padding: 20px 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-content {
+    background: #8025d1;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(79, 15, 135, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.sessions-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sessions-section + .sessions-section {
+    margin-top: 15px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4f0f87;
+    margin: 0 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #9e5bd8;
+}
+
+.sessions-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+.sessions-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sessions-list::-webkit-scrollbar-track {
+    background: rgba(158, 91, 216, 0.1);
+    border-radius: 10px;
+}
+
+.sessions-list::-webkit-scrollbar-thumb {
+    background: #9e5bd8;
+    border-radius: 10px;
+}
+
+.sessions-list::-webkit-scrollbar-thumb:hover {
+    background: #7605da;
+}
+
+/* Empty state for sessions list */
+.sessions-list:empty::after {
+    content: "No sessions available";
+    display: block;
+    text-align: center;
+    color: #999;
+    padding: 30px;
+    font-style: italic;
+}
+
+/* ====== Search + Create Row ====== */
+.search_create {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.search_bar {
+    flex: 1;
+    min-width: 250px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 2px solid #9e5bd8;
+    font-size: 14px;
+    font-family: inter, sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search_bar:focus {
+    outline: none;
+    border-color: #7605da;
+    box-shadow: 0 0 0 3px rgba(158, 91, 216, 0.2);
+}
+
+.search_bar::placeholder {
+    color: #999;
+}
+
+/* Green "Create a New Session" button */
+.create_sessions {
+    background-color: #904fca;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: inter, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(9, 179, 75, 0.3);
+    white-space: nowrap;
+}
+
+.create_sessions:hover {
+    background-color: #9251cb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(9, 179, 75, 0.4);
+}
+
+.create_sessions:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(9, 179, 75, 0.3);
+}
+
+/* Filter Button */
+.filter_sessions {
+  background-color: #904fca;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: inter, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(255, 152, 0, 0.3);
+  white-space: nowrap;
+}
+
+.filter_sessions:hover {
+  background-color: #9251cb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 152, 0, 0.4);
+}
+
+.filter_sessions:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(255, 152, 0, 0.3);
+}
+
+/* ====== SESSION CARD STYLES ====== */
+.session_card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f4fc 100%);
+  border: 2px solid #9e5bd8;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: inter, sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(79, 15, 135, 0.1);
+}
+
+.session_card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(79, 15, 135, 0.2);
+  border-color: #7605da;
+}
+
+/* Chill intensity style */
+.session_card.chill {
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+  border-color: #00acc1;
+}
+
+/* Moderate intensity style */
+.session_card.moderate {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-color: #fb8c00;
+}
+
+/* Intense intensity style */
+.session_card.intense {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-color: #e53935;
+}
+
+/* Keep text on left and button on right */
+.session_card > div:last-child {
+  margin-left: auto;
+}
+
+/* TEXT STYLING */
+.session_card h1 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #4f0f87;
+}
+
+.session_card p {
+  margin: 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6f1fb6;
+}
+
+.session_card p span {
+  font-weight: 400;
+  color: #555;
+}
+
+/* ACTION BUTTON */
+.action {
+  background: linear-gradient(135deg, #6f1fb6 0%, #904fca 100%);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(111, 31, 182, 0.3);
+  white-space: nowrap;
+}
+
+.action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(111, 31, 182, 0.4);
+}
+
+.action:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(111, 31, 182, 0.3);
+}
+
+/* Leave Session Button */
+.leave-session {
+  background: linear-gradient(135deg, #e53935 0%, #ff5252 100%) !important;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(229, 57, 53, 0.3);
+}
+
+.leave-session:hover {
+  background: linear-gradient(135deg, #ff1744 0%, #ff5252 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(229, 57, 53, 0.4);
+}
+
+.leave-session:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(229, 57, 53, 0.3);
+}
+
+/* Join Session Button */
+.join-session {
+  background: linear-gradient(135deg, #09b34b 0%, #00c853 100%) !important;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(9, 179, 75, 0.3);
+}
+
+.join-session:hover {
+  background: linear-gradient(135deg, #00e676 0%, #00c853 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(9, 179, 75, 0.4);
+}
+
+.join-session:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(9, 179, 75, 0.3);
+}
+
+/* RESPONSIVE ADJUSTMENT */
+@media (max-width: 768px) {
+  .session_card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .session_card > div:last-child {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .action {
+    width: 100%;
+  }
+
+  .dashboard-content {
+    padding: 25px;
+  }
+
+  .search_create {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search_bar {
+    width: 100%;
+  }
+
+  .create_sessions {
+    width: 100%;
+  }
+}
+

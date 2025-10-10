@@ -1,14 +1,9 @@
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 <div class="navbar">
   <div class="navbar_brand">
-    <span class="brand_title">Study Vibes</span>
-    <span class="brand_subtitle">Session Scheduler</span>
+    <span class="brand_title">StudyVibes</span>
   </div>
 
   <div class="navbar_actions">
-    <button class="logout-button" type="button">Log out</button>
+    <a href="{{ url_for('login') }}" class="logout-button">Log out</a>
   </div>
-
-
 </div>

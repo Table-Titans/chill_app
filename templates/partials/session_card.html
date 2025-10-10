@@ -1,14 +1,15 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='css/session_card.css') }}">
-
-<div class="session_card">
+<div class="session_card {{ 'chill' if session.title.startswith('😎') else 'moderate' if session.title.startswith('🤓') else 'intense' if session.title.startswith('😤') else '' }}">
     <div class="session_info">
-    <h1>Place holder class</h1>
-    <p class="location">Location: <span>placeholder</span></p>
-    <p class="time">Time: <span>placeholder</span></p>
-    <p class="attendees">Attendees: <span>placeholder</span></p>
+        <h1>{{ session.title }}</h1>
+        <p class="location" style="font-size: 16px;">Location: <span>{{ session.location }}</span></p>
+        <p class="time" style="font-size: 16px;">Time: <span>{{ session.time }}</span></p>
+        <p class="attendees" style="font-size: 16px;">Attendees: <span>{{ session.attendees }}</span></p>
     </div>
     <div>
-
-        <button class="action">placeholder</button>
+        {% if section == 'my_sessions' %}
+            <button class="action leave-session">Leave Session</button>
+        {% else %}
+            <button class="action join-session">Join Session</button>
+        {% endif %}
     </div>
 </div>
