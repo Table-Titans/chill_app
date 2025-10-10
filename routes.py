@@ -8,7 +8,11 @@ def register_routes(app):
     
     @app.route("/")
     def home():
-        return render_template("main_dashboard.html", my_sessions=my_sessions, join_sessions=join_sessions)
+        return render_template("main_dashboard.html", 
+                             my_sessions=my_sessions, 
+                             join_sessions=join_sessions,
+                             courses=test_course_offerings,
+                             locations=test_locations)
     
     @app.route("/login")
     def login():

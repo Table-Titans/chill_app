@@ -51,5 +51,94 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Filter Panel Toggle
+    const filterToggle = document.getElementById('filterToggle');
+    const filterPanel = document.getElementById('filterPanel');
+    
+    if (filterToggle && filterPanel) {
+        filterToggle.addEventListener('click', function() {
+            filterPanel.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    }
+    
+    // Filter Functionality
+    const applyFiltersBtn = document.getElementById('applyFilters');
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    const searchBar = document.getElementById('searchBar');
+    
+    function applyFilters() {
+        const courseFilter = document.getElementById('filterCourse').value.toLowerCase();
+        const locationFilter = document.getElementById('filterLocation').value.toLowerCase();
+        const yearFilter = document.getElementById('filterYear').value;
+        const termFilter = document.getElementById('filterTerm').value;
+        const professorFilter = document.getElementById('filterProfessor').value.toLowerCase();
+        const searchQuery = searchBar ? searchBar.value.toLowerCase() : '';
+        
+        const sessionCards = document.querySelectorAll('#joinSessionsList .session_card');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        let visibleCount = 0;
+        
+        sessionCards.forEach(card => {
+            const courseName = card.getAttribute('data-course-name').toLowerCase();
+            const locationAddress = card.getAttribute('data-location-address').toLowerCase();
+            const courseYear = card.getAttribute('data-course-year');
+            const courseTerm = card.getAttribute('data-course-term');
+            const professorName = card.getAttribute('data-professor-name').toLowerCase();
+            const cardText = card.textContent.toLowerCase();
+            
+            // Check if card matches all filters
+            const matchesCourse = !courseFilter || courseName.includes(courseFilter);
+            const matchesLocation = !locationFilter || locationAddress.includes(locationFilter);
+            const matchesYear = !yearFilter || courseYear === yearFilter;
+            const matchesTerm = !termFilter || courseTerm === termFilter;
+            const matchesProfessor = !professorFilter || professorName.includes(professorFilter);
+            const matchesSearch = !searchQuery || cardText.includes(searchQuery);
+            
+            if (matchesCourse && matchesLocation && matchesYear && matchesTerm && matchesProfessor && matchesSearch) {
+                card.style.display = 'flex';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        // Show/hide no results message
+        if (noResultsMessage) {
+            noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    }
+    
+    function clearFilters() {
+        document.getElementById('filterCourse').value = '';
+        document.getElementById('filterLocation').value = '';
+        document.getElementById('filterYear').value = '';
+        document.getElementById('filterTerm').value = '';
+        document.getElementById('filterProfessor').value = '';
+        if (searchBar) searchBar.value = '';
+        
+        applyFilters();
+    }
+    
+    // Event listeners for filter controls
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', applyFilters);
+    }
+    
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', clearFilters);
+    }
+    
+    // Apply filters when search bar changes
+    if (searchBar) {
+        searchBar.addEventListener('input', applyFilters);
+    }
+    
+    // Apply filters when any filter changes
+    const filterSelects = document.querySelectorAll('.filter-select');
+    filterSelects.forEach(select => {
+        select.addEventListener('change', applyFilters);
+    });
 });
 
