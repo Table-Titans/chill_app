@@ -80,11 +80,11 @@ def register_routes(app):
     @app.route("/login")
     def login():
         return render_template("auth/login.html", title="Login")
-    
+
     @app.route("/register")
     def register():
         return render_template("auth/register.html", title="Register")
-    
+
     @app.route("/reset-password")
     def reset_password():
         return render_template("auth/reset_pass.html", title="Reset Password")
