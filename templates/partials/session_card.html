@@ -9,13 +9,15 @@
      data-course-year="{{ course.year if course else '' }}"
      data-course-term="{{ course.term if course else '' }}"
      data-professor-name="{{ course.professor_name if course else '' }}">
-    <div class="session_info">
-        <h1>{{ session.title }}</h1>
-        <p class="location" style="font-size: 16px;">Location: <span>{{ session.location }}</span></p>
-        <p class="time" style="font-size: 16px;">Time: <span>{{ session.time }}</span></p>
-        <p class="attendees" style="font-size: 16px;">Attendees: <span>{{ session.attendees }}</span></p>
-    </div>
-    <div>
+    <a class="session-card-link" href="{{ url_for('view_session', session_id=session.id) }}">
+        <div class="session_info">
+            <h1>{{ session.title }}</h1>
+            <p class="session-meta-line location">Location: <span>{{ session.location }}</span></p>
+            <p class="session-meta-line time">Time: <span>{{ session.time }}</span></p>
+            <p class="session-meta-line attendees">Attendees: <span>{{ session.attendees }}</span></p>
+        </div>
+    </a>
+    <div class="session-card-actions">
         {% if section == 'my_sessions' %}
             <button class="action leave-session" data-session-id="{{ session.id }}">Leave Session</button>
         {% else %}
