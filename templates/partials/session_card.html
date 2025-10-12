@@ -1,5 +1,5 @@
-{% set course = courses|selectattr("id", "equalto", session.course_id)|first if session.course_id else None %}
-{% set location = locations|selectattr("id", "equalto", session.location_id)|first if session.location_id else None %}
+{% set course = course_lookup.get(session.course_id) if course_lookup and session.course_id else None %}
+{% set location = location_lookup.get(session.location_id) if location_lookup and session.location_id else None %}
 <div class="session_card {{ 'chill' if session.title.startswith('😎') else 'moderate' if session.title.startswith('🤓') else 'intense' if session.title.startswith('😤') else '' }}" 
      data-session-id="{{ session.id }}"
      data-course-id="{{ session.course_id if session.course_id else '' }}"
@@ -7,8 +7,8 @@
      data-course-name="{{ course.title if course else '' }}"
      data-location-address="{{ location.address if location else '' }}"
      data-course-year="{{ course.year if course else '' }}"
-     data-course-term="{{ course.term if course else '' }}"
-     data-professor-name="{{ course.professor_name if course else '' }}">
+     data-course-term="{{ course.term if course and course.term is defined else '' }}"
+     data-professor-name="{{ course.professor_name if course and course.professor_name is defined else '' }}">
     <a class="session-card-link" href="{{ url_for('view_session', session_id=session.id) }}">
         <div class="session_info">
             <h1>{{ session.title }}</h1>

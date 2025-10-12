@@ -49,8 +49,8 @@
                 <label for="filterCourse">Course Name</label>
                 <select id="filterCourse" class="filter-select">
                   <option value="">All Courses</option>
-                  {% for course in courses|unique(attribute='title')|sort(attribute='title') %}
-                    <option value="{{ course.title }}">{{ course.title }}</option>
+                  {% for title in course_titles %}
+                    <option value="{{ title }}">{{ title }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -59,8 +59,8 @@
                 <label for="filterLocation">Location</label>
                 <select id="filterLocation" class="filter-select">
                   <option value="">All Locations</option>
-                  {% for location in locations|unique(attribute='address')|sort(attribute='address') %}
-                    <option value="{{ location.address }}">{{ location.address }}</option>
+                  {% for address in location_addresses %}
+                    <option value="{{ address }}">{{ address }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -69,8 +69,8 @@
                 <label for="filterYear">Year</label>
                 <select id="filterYear" class="filter-select">
                   <option value="">All Years</option>
-                  {% for course in courses|unique(attribute='year')|sort(attribute='year', reverse=True) %}
-                    <option value="{{ course.year }}">{{ course.year }}</option>
+                  {% for year in course_years %}
+                    <option value="{{ year }}">{{ year }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -79,9 +79,9 @@
                 <label for="filterTerm">Term</label>
                 <select id="filterTerm" class="filter-select">
                   <option value="">All Terms</option>
-                  <option value="1">Fall</option>
-                  <option value="2">Spring</option>
-                  <option value="3">Summer</option>
+                  {% for value, label in term_options %}
+                    <option value="{{ value }}">{{ label }}</option>
+                  {% endfor %}
                 </select>
               </div>
               
@@ -89,8 +89,8 @@
                 <label for="filterProfessor">Professor</label>
                 <select id="filterProfessor" class="filter-select">
                   <option value="">All Professors</option>
-                  {% for course in courses|unique(attribute='professor_name')|sort(attribute='professor_name') %}
-                    <option value="{{ course.professor_name }}">{{ course.professor_name }}</option>
+                  {% for professor in professor_names %}
+                    <option value="{{ professor }}">{{ professor }}</option>
                   {% endfor %}
                 </select>
               </div>
