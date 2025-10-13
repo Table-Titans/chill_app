@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const applyFiltersBtn = document.getElementById('applyFilters');
     const clearFiltersBtn = document.getElementById('clearFilters');
     const searchBar = document.getElementById('searchBar');
+    const filterTag = document.getElementById('filterTag');
     
     function applyFilters() {
         const courseFilter = document.getElementById('filterCourse').value.toLowerCase();
@@ -74,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const yearFilter = document.getElementById('filterYear').value;
         const termFilter = document.getElementById('filterTerm').value;
         const professorFilter = document.getElementById('filterProfessor').value.toLowerCase();
+        const tagFilter = filterTag ? filterTag.value.toLowerCase() : '';
         const searchQuery = searchBar ? searchBar.value.toLowerCase() : '';
         
         const sessionCards = document.querySelectorAll('#joinSessionsList .session_card');
@@ -86,6 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const courseYear = card.getAttribute('data-course-year');
             const courseTerm = card.getAttribute('data-course-term');
             const professorName = card.getAttribute('data-professor-name').toLowerCase();
+            const cardTagsValue = card.getAttribute('data-tags') || '';
+            const cardTags = cardTagsValue ? cardTagsValue.toLowerCase().split(',') : [];
             const cardText = card.textContent.toLowerCase();
             
             // Check if card matches all filters
@@ -94,9 +98,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const matchesYear = !yearFilter || courseYear === yearFilter;
             const matchesTerm = !termFilter || courseTerm === termFilter;
             const matchesProfessor = !professorFilter || professorName.includes(professorFilter);
+            const matchesTag = !tagFilter || cardTags.includes(tagFilter);
             const matchesSearch = !searchQuery || cardText.includes(searchQuery);
             
-            if (matchesCourse && matchesLocation && matchesYear && matchesTerm && matchesProfessor && matchesSearch) {
+            if (matchesCourse && matchesLocation && matchesYear && matchesTerm && matchesProfessor && matchesTag && matchesSearch) {
                 card.style.display = 'flex';
                 visibleCount++;
             } else {
@@ -116,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('filterYear').value = '';
         document.getElementById('filterTerm').value = '';
         document.getElementById('filterProfessor').value = '';
+        if (filterTag) filterTag.value = '';
         if (searchBar) searchBar.value = '';
         
         applyFilters();
@@ -141,4 +147,3 @@ document.addEventListener('DOMContentLoaded', function() {
         select.addEventListener('change', applyFilters);
     });
 });
-

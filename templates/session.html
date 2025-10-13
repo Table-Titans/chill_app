@@ -24,6 +24,11 @@
 
 {% set term_lookup = {1: "Fall", 2: "Spring", 3: "Summer", 4: "Winter"} %}
 {% set display_title = session_data.get('title') or (course_title if course_title else "Study Session Details") %}
+{% set room_type_info = session_data.get('room_type') %}
+{% set session_tags = session_data.get('tags') or [] %}
+{% set session_resources = session_data.get('resources') or [] %}
+{% set session_reminders = session_data.get('reminders') or [] %}
+{% set is_organizer = session_data.get('organizer', '') is string and 'you' in session_data.get('organizer', '').lower() %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,6 +85,15 @@
         {% set location_ns.map_query = session_data.get('location') %}
     {% endif %}
     <div class="form-container session-details">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="flash {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <a href="{{ url_for('home') }}" class="back-btn">← Back to dashboard</a>
         <div class="session-header">
             <h1 class="session-title">
@@ -91,6 +105,13 @@
             <p class="session-subtitle">
                 {{ course_title if course_title else "Stay on track with the full session details" }}
             </p>
+            {% if session_tags %}
+                <div class="session-tag-group">
+                    {% for tag in session_tags %}
+                        <span class="tag-pill">{{ tag.tag_name|title }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
         <div class="session-summary-grid">
@@ -110,6 +131,16 @@
                 <span class="summary-label">Location</span>
                 <span class="summary-value">{{ location_ns.label or "Location coming soon" }}</span>
             </div>
+            <div class="summary-card">
+                <span class="summary-label">Room Type</span>
+                <span class="summary-value">
+                    {% if room_type_info %}
+                        {{ room_type_info.type_name }}
+                    {% else %}
+                        TBD
+                    {% endif %}
+                </span>
+            </div>
         </div>
 
         <div class="session-sections">
@@ -122,6 +153,54 @@
                 {% endif %}
                 {% if notes_text %}
                     <p class="notes-highlight">{{ notes_text }}</p>
+                {% endif %}
+            </div>
+
+            <div class="session-card">
+                <h2 class="session-section-title">Session Resources</h2>
+                {% if session_resources %}
+                    <ul class="resource-list">
+                        {% for resource in session_resources %}
+                            <li>
+                                <a href="{{ resource.resource_url }}" target="_blank" rel="noopener">
+                                    {{ resource.resource_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No resources uploaded yet.</p>
+                {% endif %}
+                {% if is_organizer %}
+                    <form method="POST"
+                          action="{{ url_for('upload_session_resource', session_id=session_data.id) }}"
+                          enctype="multipart/form-data"
+                          class="resource-upload-form">
+                        <label for="resource_file_upload_{{ session_data.id }}">Add a new resource (txt or pdf)</label>
+                        <input type="file"
+                               id="resource_file_upload_{{ session_data.id }}"
+                               name="resource_file"
+                               accept=".txt,.pdf"
+                               required>
+                        <button type="submit" class="submit-btn">Upload Resource</button>
+                        <small>The upload creates a placeholder CDN link until storage is ready.</small>
+                    </form>
+                {% endif %}
+            </div>
+
+            <div class="session-card">
+                <h2 class="session-section-title">Email Reminder</h2>
+                {% if session_reminders %}
+                    <ul class="reminder-list">
+                        {% for reminder in session_reminders %}
+                            <li>
+                                <strong>{{ reminder.display_time or reminder.reminder_time }}</strong>
+                                – {{ "Sent" if reminder.reminder_sent else "Pending" }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No email reminders scheduled yet.</p>
                 {% endif %}
             </div>
 
@@ -163,6 +242,16 @@
                         </span>
                     </div>
                 </div>
+            </div>
+
+            <div class="session-card">
+                <h2 class="session-section-title">Space Details</h2>
+                {% if room_type_info %}
+                    <p><strong>{{ room_type_info.type_name }}</strong></p>
+                    <p>{{ room_type_info.description }}</p>
+                {% else %}
+                    <p>The room type for this session has not been set yet.</p>
+                {% endif %}
             </div>
 
             <div class="session-card map-card">

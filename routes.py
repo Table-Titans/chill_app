@@ -1,10 +1,15 @@
 from datetime import datetime
 
 from flask import render_template, request, redirect, url_for, flash, jsonify, abort
+from werkzeug.utils import secure_filename
 from tests.my_session_data import test_sessions as my_sessions
 from tests.join_session_data import test_sessions as join_sessions
 from tests.location_data import test_locations
 from tests.course_offering_data import test_course_offerings
+from tests.room_type_data import test_room_types
+from tests.tag_data import test_tags, test_session_tags
+from tests.resource_data import test_resources
+from tests.reminder_data import test_reminders
 
 def register_routes(app):
 
@@ -24,6 +29,33 @@ def register_routes(app):
                 if session['id'] == session_id:
                     return session
         return None
+
+    def find_room_type(room_type_id):
+        if not room_type_id:
+            return None
+        return next((room for room in test_room_types if room['id'] == room_type_id), None)
+
+    def get_session_tag_ids(session_id):
+        if not session_id:
+            return []
+        return [link['tag_id'] for link in test_session_tags if link['session_id'] == session_id]
+
+    def find_tags(tag_ids):
+        if not tag_ids:
+            return []
+        return [tag for tag in test_tags if tag['id'] in tag_ids]
+
+    def get_resources_for_session(session_id):
+        return [resource for resource in test_resources if resource['session_id'] == session_id]
+
+    def get_reminders_for_session(session_id):
+        reminders = [reminder for reminder in test_reminders if reminder['session_id'] == session_id]
+        formatted = []
+        for reminder in reminders:
+            reminder_copy = dict(reminder)
+            reminder_copy['display_time'] = format_datetime_string(reminder_copy.get('reminder_time'))
+            formatted.append(reminder_copy)
+        return formatted
 
     def format_datetime_string(value):
         if not value:
@@ -61,6 +93,14 @@ def register_routes(app):
         session_copy['end_time'] = end_display
 
         attendees_data = session_copy.get('attendee_list', session_copy.get('attendees'))
+        room_type = find_room_type(session_copy.get('room_type_id'))
+        session_copy['room_type'] = room_type
+
+        tag_ids = session_copy.get('tag_ids') or get_session_tag_ids(session_copy['id'])
+        session_copy['tag_ids'] = tag_ids
+        session_copy['tags'] = find_tags(tag_ids)
+        session_copy['resources'] = get_resources_for_session(session_copy['id'])
+        session_copy['reminders'] = get_reminders_for_session(session_copy['id'])
 
         return {
             'session': session_copy,
@@ -75,7 +115,9 @@ def register_routes(app):
                              my_sessions=my_sessions, 
                              join_sessions=join_sessions,
                              courses=test_course_offerings,
-                             locations=test_locations)
+                             locations=test_locations,
+                             room_types=test_room_types,
+                             tags=test_tags)
     
     @app.route("/login")
     def login():
@@ -102,10 +144,21 @@ def register_routes(app):
             start_time = request.form.get('start_time')
             end_time = request.form.get('end_time')
             chill_level = request.form.get('chill_level')
+            room_type_id = request.form.get('room_type_id', type=int)
+            reminder_time = request.form.get('reminder_time')
+            tag_ids = []
+            for raw_tag in request.form.getlist('tags'):
+                try:
+                    tag_ids.append(int(raw_tag))
+                except (TypeError, ValueError):
+                    continue
+            resource_ids = []
+            reminder_ids = []
             organizer = "You"
 
             selected_course = find_course(course_id)
             selected_location = find_location(location_id)
+            room_type = find_room_type(room_type_id)
 
             course_title = selected_course['title'] if selected_course else course_input or "Study Session"
             course_section = selected_course['section'] if selected_course and selected_course.get('section') else ""
@@ -136,6 +189,32 @@ def register_routes(app):
             existing_ids = [session['id'] for session in my_sessions] + [session['id'] for session in join_sessions]
             new_session_id = max(existing_ids) + 1 if existing_ids else 1
 
+            # Handle resource upload (placeholder upload to CDN)
+            resource_file = request.files.get('resource_file')
+            if resource_file and resource_file.filename:
+                filename = secure_filename(resource_file.filename)
+                if '.' not in filename:
+                    flash('Resources must have a .txt or .pdf extension.', 'error')
+                    return redirect(request.url)
+                extension = filename.rsplit('.', 1)[-1].lower()
+                if extension not in ('txt', 'pdf'):
+                    flash('Resources must be a text or PDF file.', 'error')
+                    return redirect(request.url)
+
+                existing_resource_ids = [resource['id'] for resource in test_resources]
+                new_resource_id = max(existing_resource_ids) + 1 if existing_resource_ids else 1
+                fake_url = f"https://cdn.example.com/uploads/{filename}"
+
+                new_resource = {
+                    "id": new_resource_id,
+                    "session_id": new_session_id,
+                    "resource_name": filename,
+                    "resource_url": fake_url,
+                    "updated_by": 0
+                }
+                test_resources.append(new_resource)
+                resource_ids.append(new_resource_id)
+
             new_session = {
                 "id": new_session_id,
                 "course_id": selected_course['id'] if selected_course else None,
@@ -155,7 +234,30 @@ def register_routes(app):
                 "year": course_year,
                 "term": course_term,
                 "section": course_section,
+                "room_type_id": room_type['id'] if room_type else None,
+                "tag_ids": tag_ids,
+                "resource_ids": resource_ids,
+                "reminder_ids": reminder_ids
             }
+
+            if reminder_time:
+                existing_reminder_ids = [reminder['id'] for reminder in test_reminders]
+                new_reminder_id = max(existing_reminder_ids) + 1 if existing_reminder_ids else 1
+                new_reminder = {
+                    "id": new_reminder_id,
+                    "session_id": new_session_id,
+                    "user_id": 0,
+                    "reminder_time": reminder_time,
+                    "reminder_sent": False
+                }
+                test_reminders.append(new_reminder)
+                reminder_ids.append(new_reminder_id)
+
+            for tag_id in tag_ids:
+                test_session_tags.append({
+                    "session_id": new_session_id,
+                    "tag_id": tag_id
+                })
 
             my_sessions.append(new_session)
             
@@ -164,7 +266,7 @@ def register_routes(app):
             flash('Study session created successfully!', 'success')
             return redirect(url_for('view_session', session_id=new_session_id))
             
-        return render_template("create_session.html", title="Create Session")
+        return render_template("create_session.html", title="Create Session", room_types=test_room_types, tags=test_tags)
 
     @app.route("/sessions/<int:session_id>")
     def view_session(session_id):
@@ -179,8 +281,55 @@ def register_routes(app):
             session=context['session'],
             course=context['course'],
             location=context['location'],
-            attendees=context['attendees']
+            attendees=context['attendees'],
+            tags=test_tags,
+            room_types=test_room_types
         )
+
+    @app.route("/sessions/<int:session_id>/resources", methods=['POST'])
+    def upload_session_resource(session_id):
+        session_record = find_session(session_id)
+        if not session_record:
+            abort(404)
+
+        organizer_name = session_record.get('organizer', '')
+        if "You" not in organizer_name:
+            flash('Only the session organizer can upload resources for now.', 'error')
+            return redirect(url_for('view_session', session_id=session_id))
+
+        resource_file = request.files.get('resource_file')
+        if not resource_file or not resource_file.filename:
+            flash('Please choose a text or PDF file to upload.', 'error')
+            return redirect(url_for('view_session', session_id=session_id))
+
+        filename = secure_filename(resource_file.filename)
+        if '.' not in filename:
+            flash('Resources must have a .txt or .pdf extension.', 'error')
+            return redirect(url_for('view_session', session_id=session_id))
+
+        extension = filename.rsplit('.', 1)[-1].lower()
+        if extension not in ('txt', 'pdf'):
+            flash('Resources must be a text or PDF file.', 'error')
+            return redirect(url_for('view_session', session_id=session_id))
+
+        existing_resource_ids = [resource['id'] for resource in test_resources]
+        new_resource_id = max(existing_resource_ids) + 1 if existing_resource_ids else 1
+        fake_url = f"https://cdn.example.com/uploads/{filename}"
+
+        new_resource = {
+            "id": new_resource_id,
+            "session_id": session_id,
+            "resource_name": filename,
+            "resource_url": fake_url,
+            "updated_by": 0
+        }
+        test_resources.append(new_resource)
+
+        resource_ids = session_record.setdefault('resource_ids', [])
+        resource_ids.append(new_resource_id)
+
+        flash('Resource uploaded. The CDN link is a placeholder until storage is in place.', 'success')
+        return redirect(url_for('view_session', session_id=session_id))
     
     @app.route("/leave_session/<int:session_id>", methods=['POST'])
     def leave_session(session_id):

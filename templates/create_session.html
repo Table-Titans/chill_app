@@ -11,7 +11,16 @@
     
     <div class="form-container">
         <h1>Create a Study Session</h1>
-        <form method="POST" action="{{ url_for('create_session') }}" class="create-session-form">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="flash {{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('create_session') }}" class="create-session-form" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="course">Course</label>
                 <div class="autocomplete-wrapper">
@@ -28,6 +37,17 @@
                     <input type="hidden" id="location_id" name="location_id">
                     <div class="autocomplete-list" id="location-suggestions"></div>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="room_type_id">Room Type</label>
+                <select id="room_type_id" name="room_type_id" required>
+                    <option value="">Select a room type...</option>
+                    {% for room in room_types %}
+                        <option value="{{ room.id }}">{{ room.type_name }}</option>
+                    {% endfor %}
+                </select>
+                <small>Pick where the session takes place so others know what to expect.</small>
             </div>
 
             <div class="form-group">
@@ -58,6 +78,31 @@
                     <option value="🤓">🤓 Focused</option>
                     <option value="😤">😤 Intense</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label>Tags</label>
+                <div class="tag-options">
+                    {% for tag in tags %}
+                        <label class="tag-checkbox">
+                            <input type="checkbox" name="tags" value="{{ tag.id }}">
+                            <span>{{ tag.tag_name|title }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+                <small>Tags help classmates filter sessions (optional).</small>
+            </div>
+
+            <div class="form-group">
+                <label for="reminder_time">Email Reminder</label>
+                <input type="datetime-local" id="reminder_time" name="reminder_time">
+                <small>Pick a time to send a simple reminder email. Leave blank to skip.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="resource_file">Upload Resource</label>
+                <input type="file" id="resource_file" name="resource_file" accept=".txt,.pdf">
+                <small>Upload a text or PDF file. The app will generate a placeholder CDN link.</small>
             </div>
 
             <div class="form-actions">
