@@ -18,7 +18,9 @@ test_sessions = [
             "Morgan Lee (Host)",
             "Jamie F.",
             "Riley S."
-        ]
+        ],
+        "room_type_id": 1,
+        "tag_ids": [1, 4]
     },
     {
         "id": 4,
@@ -37,7 +39,9 @@ test_sessions = [
         "attendee_list": {
             "Confirmed": 12,
             "Waitlist": 3
-        }
+        },
+        "room_type_id": 2,
+        "tag_ids": [2]
     },
     {
         "id": 5,
@@ -53,7 +57,9 @@ test_sessions = [
         "organizer": "Samira Chen",
         "chill_level": "😎",
         "start_time": "2025-02-24T17:00:00",
-        "end_time": "2025-02-24T19:00:00"
+        "end_time": "2025-02-24T19:00:00",
+        "room_type_id": 2,
+        "tag_ids": [1]
     },
     {
         "id": 6,
@@ -66,7 +72,9 @@ test_sessions = [
         "max_attendees": 25,
         "organizer": "Theo Grant",
         "start_time": "2025-02-21T06:00:00",
-        "end_time": "2025-02-21T08:00:00"
+        "end_time": "2025-02-21T08:00:00",
+        "room_type_id": 1,
+        "tag_ids": [4]
     },
     {
         "id": 7,
@@ -81,7 +89,9 @@ test_sessions = [
         "organizer": "Dr. Patel",
         "chill_level": "🤓",
         "start_time": "2025-02-25T13:30:00",
-        "end_time": "2025-02-25T15:00:00"
+        "end_time": "2025-02-25T15:00:00",
+        "room_type_id": 3,
+        "tag_ids": [2]
     },
     {
         "id": 8,
@@ -93,7 +103,9 @@ test_sessions = [
         "attendees": 20,
         "max_attendees": 40,
         "organizer": "Workshop Team",
-        "notes": "Hands-on debugging lab. Bring a failing script!"
+        "notes": "Hands-on debugging lab. Bring a failing script!",
+        "room_type_id": 1,
+        "tag_ids": [3]
     },
     {
         "id": 9,
@@ -112,7 +124,9 @@ test_sessions = [
             "Priya Desai",
             "Harvey B.",
             "Ana T."
-        ]
+        ],
+        "room_type_id": 2,
+        "tag_ids": [1, 2]
     },
     {
         "id": 10,
@@ -127,6 +141,8 @@ test_sessions = [
         "chill_level": "😤",
         "notes": "Lab computers reserved; arrive 10 minutes early.",
         "start_time": "2025-02-27T11:00:00",
-        "end_time": "2025-02-27T13:00:00"
+        "end_time": "2025-02-27T13:00:00",
+        "room_type_id": 3,
+        "tag_ids": [2]
     }
 ]

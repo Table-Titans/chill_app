@@ -1,5 +1,14 @@
 {% set course = courses|selectattr("id", "equalto", session.course_id)|first if session.course_id else None %}
 {% set location = locations|selectattr("id", "equalto", session.location_id)|first if session.location_id else None %}
+{% set tag_ids = session.tag_ids if session.tag_ids is defined and session.tag_ids is not none else [] %}
+{% set tag_ns = namespace(items=[]) %}
+{% if tags is defined and tag_ids %}
+    {% for tag in tags %}
+        {% if tag.id in tag_ids %}
+            {% set tag_ns.items = tag_ns.items + [tag.tag_name] %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <div class="session_card {{ 'chill' if session.title.startswith('😎') else 'moderate' if session.title.startswith('🤓') else 'intense' if session.title.startswith('😤') else '' }}" 
      data-session-id="{{ session.id }}"
      data-course-id="{{ session.course_id if session.course_id else '' }}"
@@ -8,13 +17,21 @@
      data-location-address="{{ location.address if location else '' }}"
      data-course-year="{{ course.year if course else '' }}"
      data-course-term="{{ course.term if course else '' }}"
-     data-professor-name="{{ course.professor_name if course else '' }}">
+     data-professor-name="{{ course.professor_name if course else '' }}"
+     data-tags="{{ tag_ns.items|join(',') }}">
     <a class="session-card-link" href="{{ url_for('view_session', session_id=session.id) }}">
         <div class="session_info">
             <h1>{{ session.title }}</h1>
             <p class="session-meta-line location">Location: <span>{{ session.location }}</span></p>
             <p class="session-meta-line time">Time: <span>{{ session.time }}</span></p>
             <p class="session-meta-line attendees">Attendees: <span>{{ session.attendees }}</span></p>
+            {% if tag_ns.items %}
+                <div class="session-tags">
+                    {% for tag_name in tag_ns.items %}
+                        <span class="tag-pill">{{ tag_name|title }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
     </a>
     <div class="session-card-actions">

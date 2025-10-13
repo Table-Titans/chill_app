@@ -64,6 +64,16 @@
                   {% endfor %}
                 </select>
               </div>
+
+              <div class="filter-group">
+                <label for="filterTag">Tag</label>
+                <select id="filterTag" class="filter-select">
+                  <option value="">All Tags</option>
+                  {% for tag in tags|sort(attribute='tag_name') %}
+                    <option value="{{ tag.tag_name }}">{{ tag.tag_name|title }}</option>
+                  {% endfor %}
+                </select>
+              </div>
               
               <div class="filter-group">
                 <label for="filterYear">Year</label>
